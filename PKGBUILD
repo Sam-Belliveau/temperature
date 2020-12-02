@@ -1,18 +1,16 @@
-# Maintainer: SamBelliveau <sam.belliveau@gmail.com>
-pkgname=smooth-temperature-git
+# Maintainer: Sam Belliveau <sam.belliveau@gmail.com>
+pkgname=smooth-temperature-bin
 pkgver=0.1.0
 pkgrel=1
-makedepends=('rust' 'cargo')
-arch=('i686' 'x86_64' 'armv6h' 'armv7h')
-
-build() {
-    return 0
-}
+pkgdesc="a utility for smoothly reading hwmon sensor files and smoothly interpolating their values without high cpu or filesystem usage"
+url="https://github.com/Sam-Belliveau/temperature"
+license=("GPL")
+arch=("x86_64")
+provides=("smooth-temperature")
+options=("strip")
+source=("https://github.com/Sam-Belliveau/temperature/releases/download/v$pkgver/smooth-temperature-$pkgver-x86_64.tar.gz")
+sha256sums=("a26d8b3623bbc83e6f887d60258c2402b8e01d7a08cb6fc0777c7a0a47192e69")
 
 package() {
-    cargo install \
-         --root="$pkgdir" \
-         --git https://github.com/Sam-Belliveau/temperature \
-         --branch main \
-         smooth-temperature
+    install -Dm755 smooth-temperature -t "$pkgdir/usr/bin/"
 }

@@ -1,7 +1,12 @@
 [package]
+authors = ["Sam Belliveau <sam.belliveau@gmail.com>"]
+description = "a utility for smoothly reading hwmon sensor files and smoothly interpolating their values without high cpu or filesystem usage"
 name = "smooth-temperature"
+license = "GPL"
+homepage = "https://github.com/Sam-Belliveau/temperature"
+repository = "https://github.com/Sam-Belliveau/temperature"
+readme = "readme.md"
 version = "0.1.0"
-authors = ["SamBelliveau <sam.belliveau@gmail.com>"]
 edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
