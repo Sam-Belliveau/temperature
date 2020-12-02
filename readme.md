@@ -12,6 +12,8 @@ cargo build --release
 
 ## How to use
 
+Download the binary [here!](https://github.com/Sam-Belliveau/temperature/releases/tag/v0.1.0)
+
 This is what the help page looks like:
 ```sh
 ─╯ ./temperature --help
