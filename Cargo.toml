@@ -1,5 +1,5 @@
 [package]
-name = "smooth-temperature-git"
+name = "smooth-temperature"
 version = "0.1.0"
 authors = ["SamBelliveau <sam.belliveau@gmail.com>"]
 edition = "2018"
