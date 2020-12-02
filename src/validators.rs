@@ -18,11 +18,24 @@ pub fn valid_rate(rate: String) -> Result<(), String> {
 
 pub fn valid_rc(rc: String) -> Result<(), String> {
     match rc.parse::<f64>() {
-        Ok(rate) => {
-            if rate >= 0.0 {
+        Ok(rc) => {
+            if 0.0 <= rc {
                 Ok(())
             } else {
                 Err("value for rc must be greater than or equal 0".to_string())
+            }
+        },
+        Err(_err) => Err("invalid value for rc".to_string())
+    }
+}
+
+pub fn valid_order(order: String) -> Result<(), String> {
+    match order.parse::<usize>() {
+        Ok(order) => {
+            if 0 < order && order < 256 {
+                Ok(())
+            } else {
+                Err("order must be 0 < order < 256 to be valid".to_string())
             }
         },
         Err(_err) => Err("invalid value for rc".to_string())

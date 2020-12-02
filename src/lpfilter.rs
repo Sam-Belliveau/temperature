@@ -2,6 +2,7 @@
 use std::time::{Instant, Duration};
 
 // Standard struct for low pass filter
+#[derive(Clone)]
 pub struct LowPassFilter {
     rc: f64,
     last_value: f64,

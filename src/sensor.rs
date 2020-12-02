@@ -19,6 +19,7 @@ pub fn read_temp_from_file(file: &String) -> Result<f64, String> {
 }
 
 // Struct used to measure sensors
+#[derive(Clone)]
 pub struct Sensor {
     sensor_file: String,
     update_ms: u128,
@@ -26,13 +27,13 @@ pub struct Sensor {
     last_temp: f64,
     last_update: Instant,
 
-    filter: LowPassFilter
+    filters: Vec<LowPassFilter>
 }
 
 #[warn(dead_code)]
 impl Sensor {
 
-    pub fn init(file: String, update_ms: u128, filter_rc: f64) -> Self {
+    pub fn init(file: String, update_ms: u128, filter_rc: f64, filter_order: usize) -> Self {
         Self {
             sensor_file: file,
             update_ms: update_ms,
@@ -40,7 +41,13 @@ impl Sensor {
             last_temp: 0.0,
             last_update: Instant::now() - Duration::from_millis((2 * update_ms) as u64),
 
-            filter: LowPassFilter::init(filter_rc)
+            filters: {
+                let mut filters = Vec::new();
+                for _i in 0..filter_order {
+                    filters.push(LowPassFilter::init(filter_rc / (filter_order as f64)));
+                }
+                filters
+            }
         }
     }
 
@@ -65,7 +72,10 @@ impl Sensor {
 
     // Read temperature normally
     pub fn read_temp(&mut self) -> f64 {
-        let temp = self.raw_read_temp();
-        self.filter.get(temp)
+        let mut temp = self.raw_read_temp();
+        for filter in self.filters.iter_mut() {
+            temp = filter.get(temp);
+        }
+        temp
     }
 }
