@@ -9,7 +9,7 @@ arch=("x86_64")
 provides=("smooth-temperature")
 options=("strip")
 source=("https://github.com/Sam-Belliveau/temperature/releases/download/v$pkgver/smooth-temperature-$pkgver-x86_64.tar.gz")
-sha256sums=("a26d8b3623bbc83e6f887d60258c2402b8e01d7a08cb6fc0777c7a0a47192e69")
+sha256sums=("08d7029dea428a79ec18d3290abb3d103aa46504e94286cdfbc75a03886ea945")
 
 package() {
     install -Dm755 smooth-temperature -t "$pkgdir/usr/bin/"

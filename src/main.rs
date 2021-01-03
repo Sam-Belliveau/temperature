@@ -77,7 +77,7 @@ fn main() {
     let mut sensors = SensorGroup::init(files, rrate, rc, order);
 
     loop {
-        print!("\r{:.1}°", sensors.read_temp());
+        println!("{:.1}°", sensors.read_temp());
         io::stdout().flush().unwrap();
         thread::sleep(Duration::new(0, 1000000 * prate));
     }
