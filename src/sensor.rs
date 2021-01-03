@@ -5,16 +5,16 @@ use crate::lpfilter::LowPassFilter;
 use std::time::{Instant, Duration};
 
 // Read a temperature from a file and report an error if you cant
-pub fn read_temp_from_file(file: &String) -> Result<f64, String> {
+pub fn read_temp_from_file(file: &str) -> Result<f64, String> {
     use std::fs;
-    if let Ok(temp_str) = fs::read_to_string(file.clone()) {
+    if let Ok(temp_str) = fs::read_to_string(file) {
         if let Ok(temp_int) = temp_str.trim().parse::<i64>() {
             Ok((temp_int as f64) / (1000.0))
         } else {
             Err("error parsing temperature from supplied hwmon sensor file".to_string())
         }
     } else {
-        Err(format!("error opening hwmon sensor file [{}]", file.clone()))
+        Err(format!("error opening hwmon sensor file [{}]", file))
     }
 }
 
@@ -33,9 +33,9 @@ pub struct Sensor {
 #[warn(dead_code)]
 impl Sensor {
 
-    pub fn init(file: String, update_ms: u128, filter_rc: f64, filter_order: usize) -> Self {
+    pub fn init(file: &str, update_ms: u128, filter_rc: f64, filter_order: usize) -> Self {
         Self {
-            sensor_file: file,
+            sensor_file: file.to_string(),
             update_ms: update_ms,
 
             last_temp: 0.0,

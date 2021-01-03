@@ -1,6 +1,6 @@
 # Maintainer: Sam Belliveau <sam.belliveau@gmail.com>
 pkgname=smooth-temperature-bin
-pkgver=0.1.0
+pkgver=0.2.0
 pkgrel=1
 pkgdesc="a utility for smoothly reading hwmon sensor files and smoothly interpolating their values without high cpu or filesystem usage"
 url="https://github.com/Sam-Belliveau/temperature"

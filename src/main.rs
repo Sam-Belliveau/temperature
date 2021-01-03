@@ -1,5 +1,6 @@
 // Include Other Files
 mod sensor;
+mod sensor_group;
 mod lpfilter;
 mod validators;
 
@@ -7,8 +8,11 @@ mod validators;
 use std::thread;
 use std::time::Duration;
 
+// Flushing to the console
+use std::io::{self, Write};
+
 // Reading temperature data
-use crate::sensor::Sensor;
+use crate::sensor_group::SensorGroup;
 
 // Reading command line options
 use clap::{Arg, App};
@@ -23,13 +27,14 @@ fn main() {
     let matches = App::new("Sam's Temperature Reader")
         .version("0.1.0")
         .author("Sam Belliveau <sam.belliveau@gmail.com>")
-        .about("Read Temperature From hwmon Sensor Files")
-        .arg(Arg::with_name("HWMON FILE")
+        .about("Read Temperature From multiple/single HWMON Sensor Files")
+        .arg(Arg::with_name("HWMON FILES")
                 .index(1)
+                .multiple(true)
                 .takes_value(true)
                 .required(true)
                 .validator(validators::sensor_validator)
-                .help("hwmon sensor file that will be read from"))
+                .help("hwmon sensor file(s) that will be read from"))
         .arg(Arg::with_name("lowpass filter rc")
                 .short("r")
                 .long("filter-rc")
@@ -63,16 +68,17 @@ fn main() {
                 .help("how many milliseconds between each sensor read"))
         .get_matches();
 
-    let file   = matches.value_of("HWMON FILE").unwrap().to_string();
     let rrate  = matches.value_of("read rate").unwrap().parse::<u128>().unwrap();
     let prate  = matches.value_of("print rate").unwrap().parse::<u32>().unwrap();
     let rc     = matches.value_of("lowpass filter rc").unwrap().parse::<f64>().unwrap();
     let order  = matches.value_of("lowpass filter order").unwrap().parse::<usize>().unwrap();
 
-    let mut s = Sensor::init(file, rrate, rc, order);
+    let files : Vec<&str> = matches.values_of("HWMON FILES").unwrap().collect();
+    let mut sensors = SensorGroup::init(files, rrate, rc, order);
 
     loop {
-        println!("{:.1}°", s.read_temp());
+        print!("\r{:.1}°", sensors.read_temp());
+        io::stdout().flush().unwrap();
         thread::sleep(Duration::new(0, 1000000 * prate));
     }
 }
