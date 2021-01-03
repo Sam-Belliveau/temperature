@@ -15,7 +15,7 @@ cargo build --release
 To install this program just run:
 
 ```sh
-wget https://github.com/Sam-Belliveau/temperature/releases/download/v0.1.0/smooth-temperature-bin-0.1.0-1-x86_64.pkg.tar.xz
+wget https://github.com/Sam-Belliveau/temperature/releases/download/v0.2.0/smooth-temperature-bin-0.2.0-1-x86_64.pkg.tar.xz
 sudo pacman -U ./smooth-temperature-bin-0.1.0-1-x86_64.pkg.tar.xz
 ```
 
