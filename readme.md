@@ -8,15 +8,22 @@ Because this is a rust project, you can just run:
 cargo build --release
 ```
 
+## How to install 
 
+### Arch Linux
+
+To install this program just run:
+
+```sh
+wget https://github.com/Sam-Belliveau/temperature/releases/download/v0.1.0/smooth-temperature-bin-0.1.0-1-x86_64.pkg.tar.xz
+sudo pacman -U ./smooth-temperature-bin-0.1.0-1-x86_64.pkg.tar.xz
+```
 
 ## How to use
 
-Download the binary [here!](https://github.com/Sam-Belliveau/temperature/releases/tag/v0.1.0)
-
 This is what the help page looks like:
 ```sh
-─╯ ./temperature --help
+─╯ smooth-temperature --help
 Sam's Temperature Reader 0.1.0
 Sam Belliveau <sam.belliveau@gmail.com>
 Read Temperature From hwmon Sensor Files
@@ -46,7 +53,7 @@ The way this works is every 50ms, it prints out the temperature of the hwmon fil
 
 An example of using this program would look like:
 ```sh
-./temperature /sys/devices/platform/coretemp.0/hwmon/hwmon2/temp1_input 
+─╯  smooth-temperature /sys/devices/platform/coretemp.0/hwmon/hwmon2/temp1_input 
 ```
 
 ## Using in polybar
@@ -56,7 +63,7 @@ For this module, I am assuming you've copied the temperature binary to your home
 ```ini
 [module/temperature]
 type = custom/script
-exec = $HOME/temperature /sys/devices/platform/coretemp.0/hwmon/hwmon2/temp1_input 
+exec = smooth-temperature /sys/devices/platform/coretemp.0/hwmon/hwmon2/temp1_input 
 
 interval = 0.05
 tail = true 
